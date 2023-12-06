@@ -4,15 +4,19 @@ import 'package:place_project/common/app_colors.dart';
 class TextFieldWidget extends StatelessWidget {
   final String? hintText;
   final bool? isPassword;
+  final TextEditingController? controller;
+  //final ? isPassword;
   const TextFieldWidget({
     super.key,
     this.hintText,
     this.isPassword,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       style: const TextStyle(
         color: AppColors.blackColor,
       ),
