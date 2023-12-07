@@ -3,7 +3,9 @@ import 'package:place_project/common/app_colors.dart';
 import 'package:place_project/common/app_images.dart';
 import 'package:place_project/common/app_strings.dart';
 import 'package:place_project/common/app_text_styles.dart';
+import 'package:place_project/models/user_model.dart';
 import 'package:place_project/routes/app_routes.dart';
+import 'package:place_project/user_provider.dart';
 import 'package:place_project/widgets/app_bar_widget.dart';
 import 'package:place_project/widgets/user_avatar_widget.dart';
 
@@ -14,6 +16,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserModel? user = UserProvider.of(context);
     return Scaffold(
       appBar: AppBarWidget(
         pageTitle: AppStrings.profileStr,
@@ -45,23 +48,23 @@ class ProfilePage extends StatelessWidget {
           )
         ],
       ),
-      body: const Column(
+      body: Column(
         children: [
-          UserAvatarWidget(
+          const UserAvatarWidget(
             userImg: AppImages.imgCoverWomen,
             imgSize: 90.0,
           ),
-          SizedBox(
+          const SizedBox(
             height: 12.0,
           ),
           Text(
-            "Bhawna Kaundal",
+            user?.username ?? "",
             style: AppTextStyles.header2,
           ),
-          SizedBox(
+          const SizedBox(
             height: 8.0,
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
@@ -78,10 +81,10 @@ class ProfilePage extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 12.0,
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
@@ -122,7 +125,7 @@ class ProfilePage extends StatelessWidget {
               )
             ],
           ),
-          Divider(
+          const Divider(
             height: 24.0,
             indent: 24.0,
             endIndent: 24.0,

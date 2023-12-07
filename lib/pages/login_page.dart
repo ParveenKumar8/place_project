@@ -7,6 +7,7 @@ import 'package:place_project/common/app_strings.dart';
 import 'package:place_project/common/app_urls.dart';
 import 'package:place_project/models/user_model.dart';
 import 'package:place_project/routes/app_routes.dart';
+import 'package:place_project/widgets/bottom_nav_bar.dart';
 import 'package:place_project/widgets/button_widget.dart';
 import 'package:place_project/widgets/text_field_widget.dart';
 import 'package:http/http.dart' as http;
@@ -86,9 +87,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ButtonWidget(
                 buttonName: AppStrings.logInStr,
-                onPressed: () => {
-                  doLogin()
-                  //Navigator.of(context).popAndPushNamed(AppRoutes.bottomNav)
+                onPressed: () async {
+                  final user = await doLogin();
+                  Navigator.of(context).push(PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                    return const BottomNavBar();
+                  }));
+
+                  //Navigator.of(context).popAndPushNamed(AppRoutes.bottomNav);
 
                   // Navigator.of(context).push(
                   //   MaterialPageRoute(
@@ -159,27 +165,50 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<UserModel> doLogin() async {
+  Future<UserModel?> doLogin() async {
     final userName = emailController.text;
     final password = passwordController.text;
-    final body = {
-      "username": userName,
-      "password": password,
-    };
+    UserModel? user;
+    // final body = {
+    //   "username": userName,
+    //   "password": password,
+    // };
     debugPrint("URL is ${AppURL.signIn}");
     debugPrint('UserName && Password is $userName $password');
-    final response = await http.post(
-      Uri.parse(AppURL.signIn),
-      body: jsonEncode(body),
-    );
-    debugPrint(response.body);
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      return json;
-    } else {
-      debugPrint("̀Error in webservice");
-      throw Exception('Error');
+    // final response = await http.post(
+    //   Uri.parse(AppURL.signIn),
+    //   body: jsonEncode(body),
+    // );
+    try {
+      final response = await http.get(
+        Uri.parse(AppURL.signIn),
+        headers: {"Content-Type": "application/json"},
+      );
+      final List bodyJson = jsonDecode(response.body);
+      print(bodyJson[0]);
+
+      if (response.statusCode == 200) {
+        // To get list of object
+
+        // List<UserModel> userList = bodyJson
+        //     .map((user) => UserModel.fromJson(
+        //           user,
+        //         ))
+        //     .toList();
+
+        user = UserModel.fromJson(
+          bodyJson[0],
+        );
+        print(user.email);
+      } else {
+        debugPrint("̀Error in webservice");
+
+        throw Exception('Error');
+      }
+    } catch (e) {
+      print(e);
     }
+    return user;
   }
 
   @override
