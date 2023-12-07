@@ -16,7 +16,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel? user = UserProvider.of(context);
+    final UserModel? user = UserProvider.of(context)?.user;
     return Scaffold(
       appBar: AppBarWidget(
         pageTitle: AppStrings.profileStr,

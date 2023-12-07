@@ -3,23 +3,33 @@ import 'package:place_project/models/user_model.dart';
 
 class UserProvider extends InheritedWidget {
   final Widget child;
-  final UserModel? userModel;
+  final UserService userService;
   const UserProvider({
     super.key,
     required this.child,
-    this.userModel,
+    required this.userService,
   }) : super(
           child: child,
         );
 
-  static UserModel? of(BuildContext context) {
+  static UserService? of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<UserProvider>()
-        ?.userModel;
+        ?.userService;
   }
 
   @override
   bool updateShouldNotify(covariant UserProvider oldWidget) {
-    return oldWidget.userModel?.id != userModel?.id;
+    return oldWidget.userService.user?.id != userService.user?.id;
+  }
+}
+
+class UserService {
+  UserModel? _userModel;
+
+  UserModel? get user => _userModel;
+
+  updateUser(UserModel userModel) {
+    _userModel = userModel;
   }
 }

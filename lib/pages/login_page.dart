@@ -7,6 +7,7 @@ import 'package:place_project/common/app_strings.dart';
 import 'package:place_project/common/app_urls.dart';
 import 'package:place_project/models/user_model.dart';
 import 'package:place_project/routes/app_routes.dart';
+import 'package:place_project/user_provider.dart';
 import 'package:place_project/widgets/bottom_nav_bar.dart';
 import 'package:place_project/widgets/button_widget.dart';
 import 'package:place_project/widgets/text_field_widget.dart';
@@ -89,10 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                 buttonName: AppStrings.logInStr,
                 onPressed: () async {
                   final user = await doLogin();
-                  Navigator.of(context).push(PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                    return const BottomNavBar();
-                  }));
+                  if (!context.mounted) return;
+                  UserProvider.of(context)?.updateUser(user!);
+                  Navigator.of(context)
+                      .pushReplacementNamed(AppRoutes.bottomNav);
 
                   //Navigator.of(context).popAndPushNamed(AppRoutes.bottomNav);
 

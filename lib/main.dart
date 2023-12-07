@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return UserProvider(
+      userService: UserService(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
