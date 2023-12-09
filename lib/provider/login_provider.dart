@@ -7,8 +7,10 @@ class LoginProvider extends ChangeNotifier {
   var password = "";
   Future<LoginResponse> login() async {
     print('%%%%% $username $password');
-    return LoginService(username, password).call();
+    return LoginService("kminchelle", "0lelplR").call();
+    //return LoginService(username = "kminchelle", password = "0lelplR").call();
   }
+
   //   final userName = email;
   //   final password = password1;
   //   UserModel? user;

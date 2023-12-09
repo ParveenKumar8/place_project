@@ -6,7 +6,6 @@ import 'package:place_project/common/app_text_styles.dart';
 import 'package:place_project/models/user_model.dart';
 import 'package:place_project/provider/app_repo.dart';
 import 'package:place_project/routes/app_routes.dart';
-import 'package:place_project/user_provider.dart';
 import 'package:place_project/widgets/app_bar_widget.dart';
 import 'package:place_project/widgets/user_avatar_widget.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +17,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel user = Provider.of<AppRepo>(context).user;
+    final UserModel user = context.read<AppRepo>().user;
     return Scaffold(
       appBar: AppBarWidget(
         pageTitle: AppStrings.profileStr,

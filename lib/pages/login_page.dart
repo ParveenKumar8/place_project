@@ -1,19 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:place_project/common/app_colors.dart';
 import 'package:place_project/common/app_images.dart';
 import 'package:place_project/common/app_strings.dart';
-import 'package:place_project/common/app_urls.dart';
-import 'package:place_project/models/user_model.dart';
 import 'package:place_project/provider/app_repo.dart';
 import 'package:place_project/provider/login_provider.dart';
 import 'package:place_project/routes/app_routes.dart';
-import 'package:place_project/user_provider.dart';
-import 'package:place_project/widgets/bottom_nav_bar.dart';
 import 'package:place_project/widgets/button_widget.dart';
 import 'package:place_project/widgets/text_field_widget.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -49,20 +42,16 @@ class LoginPage extends StatelessWidget {
               ),
               const Spacer(),
               TextFieldWidget(
-                onChanged: (value) => Provider.of<LoginProvider>(
-                  context,
-                  listen: false,
-                ).username = value,
+                onChanged: (value) =>
+                    context.read<LoginProvider>().username = value,
                 hintText: AppStrings.emailStr,
               ),
               const SizedBox(
                 height: 8.0,
               ),
               TextFieldWidget(
-                onChanged: (value) => Provider.of<LoginProvider>(
-                  context,
-                  listen: false,
-                ).password = value,
+                onChanged: (value) =>
+                    context.read<LoginProvider>().password = value,
                 hintText: AppStrings.passwordStr,
                 isPassword: true,
               ),
@@ -83,20 +72,9 @@ class LoginPage extends StatelessWidget {
               ButtonWidget(
                 buttonName: AppStrings.logInStr,
                 onPressed: () {
-                  Provider.of<LoginProvider>(
-                    context,
-                    listen: false,
-                  ).login().then((value) {
-                    print(
-                        "After getting reponse from server ${value.user.name} ${value.token}");
-                    Provider.of<AppRepo>(
-                      context,
-                      listen: false,
-                    ).user = value.user;
-                    Provider.of<AppRepo>(
-                      context,
-                      listen: false,
-                    ).token = value.token;
+                  context.read<LoginProvider>().login().then((value) {
+                    context.read<AppRepo>().user = value.user;
+                    context.read<AppRepo>().token = value.token;
 
                     Navigator.of(context)
                         .pushReplacementNamed(AppRoutes.bottomNav);

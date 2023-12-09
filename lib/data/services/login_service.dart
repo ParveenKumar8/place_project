@@ -14,19 +14,22 @@ class LoginService {
   );
 
   Future<LoginResponse> call() async {
+    print('LoginService -  $username $password');
+    final response = await http.post(
+      Uri.parse(AppConfig.signIn),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(
+        {
+          "username": username,
+          "password": password,
+        },
+      ),
+    );
     // final response = await http.post(
     //   Uri.parse(AppConfig.signIn),
-    //   body: jsonEncode({
-    //     "username": username,
-    //     "password": password,
-    //   }),
     // );
-    final response = await http.get(
-      Uri.parse(AppConfig.signIn),
-    );
-    final List bodyResponse = jsonDecode(response.body);
+    final bodyResponse = jsonDecode(response.body);
     print('LoginService -  $bodyResponse');
-    print('LoginService -  ${bodyResponse[0]}');
-    return LoginResponse.fromJson(bodyResponse[0]);
+    return LoginResponse.fromJson(bodyResponse);
   }
 }

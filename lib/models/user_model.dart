@@ -1,32 +1,34 @@
 class UserModel {
   final int id;
-  final String? name;
   final String? username;
   final String? email;
-  //final AddressModel? address;
-  final String? phone;
-  final String? website;
-  //final CompanyModel? company;
+  final String? firstname;
+  final String? lastname;
+  final String? gender;
+  final String? image;
+  final String? token;
 
   UserModel(
     this.id,
-    this.name,
     this.username,
     this.email,
-    //this.address,
-    this.phone,
-    this.website,
-    //this.company,
+    this.firstname,
+    this.lastname,
+    this.gender,
+    this.image,
+    this.token,
   );
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       json['id'],
-      json['name'],
       json['username'],
       json['email'],
-      json['phone'],
-      json['website'],
+      json['firstname'],
+      json['lastname'],
+      json['gender'],
+      json['image'],
+      json['token'],
     );
   }
 }
