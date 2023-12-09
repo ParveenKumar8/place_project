@@ -1,35 +1,35 @@
-import 'package:flutter/material.dart';
-import 'package:place_project/models/user_model.dart';
+// import 'package:flutter/material.dart';
+// import 'package:place_project/models/user_model.dart';
 
-class UserProvider extends InheritedWidget {
-  final Widget child;
-  final UserService userService;
-  const UserProvider({
-    super.key,
-    required this.child,
-    required this.userService,
-  }) : super(
-          child: child,
-        );
+// class UserProvider extends InheritedWidget {
+//   final Widget child;
+//   final UserService userService;
+//   const UserProvider({
+//     super.key,
+//     required this.child,
+//     required this.userService,
+//   }) : super(
+//           child: child,
+//         );
 
-  static UserService? of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<UserProvider>()
-        ?.userService;
-  }
+//   static UserService? of(BuildContext context) {
+//     return context
+//         .dependOnInheritedWidgetOfExactType<UserProvider>()
+//         ?.userService;
+//   }
 
-  @override
-  bool updateShouldNotify(covariant UserProvider oldWidget) {
-    return oldWidget.userService.user?.id != userService.user?.id;
-  }
-}
+//   @override
+//   bool updateShouldNotify(covariant UserProvider oldWidget) {
+//     return oldWidget.userService.user?.id != userService.user?.id;
+//   }
+// }
 
-class UserService {
-  UserModel? _userModel;
+// class UserService {
+//   UserModel? _userModel;
 
-  UserModel? get user => _userModel;
+//   UserModel? get user => _userModel;
 
-  updateUser(UserModel userModel) {
-    _userModel = userModel;
-  }
-}
+//   updateUser(UserModel userModel) {
+//     _userModel = userModel;
+//   }
+// }
