@@ -6,30 +6,18 @@ import 'package:place_project/common/app_images.dart';
 import 'package:place_project/common/app_strings.dart';
 import 'package:place_project/common/app_urls.dart';
 import 'package:place_project/models/user_model.dart';
+import 'package:place_project/provider/app_repo.dart';
+import 'package:place_project/provider/login_provider.dart';
 import 'package:place_project/routes/app_routes.dart';
 import 'package:place_project/user_provider.dart';
 import 'package:place_project/widgets/bottom_nav_bar.dart';
 import 'package:place_project/widgets/button_widget.dart';
 import 'package:place_project/widgets/text_field_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  late final TextEditingController emailController;
-  late final TextEditingController passwordController;
-
-  @override
-  void initState() {
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +49,20 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const Spacer(),
               TextFieldWidget(
-                controller: emailController,
+                onChanged: (value) => Provider.of<LoginProvider>(
+                  context,
+                  listen: false,
+                ).username = value,
                 hintText: AppStrings.emailStr,
               ),
               const SizedBox(
                 height: 8.0,
               ),
               TextFieldWidget(
-                controller: passwordController,
+                onChanged: (value) => Provider.of<LoginProvider>(
+                  context,
+                  listen: false,
+                ).password = value,
                 hintText: AppStrings.passwordStr,
                 isPassword: true,
               ),
@@ -88,12 +82,27 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ButtonWidget(
                 buttonName: AppStrings.logInStr,
-                onPressed: () async {
-                  final user = await doLogin();
-                  if (!context.mounted) return;
-                  UserProvider.of(context)?.updateUser(user!);
-                  Navigator.of(context)
-                      .pushReplacementNamed(AppRoutes.bottomNav);
+                onPressed: () {
+                  Provider.of<LoginProvider>(
+                    context,
+                    listen: false,
+                  ).login().then((value) {
+                    print(
+                        "After getting reponse from server ${value.user.name} ${value.token}");
+                    Provider.of<AppRepo>(
+                      context,
+                      listen: false,
+                    ).user = value.user;
+                    Provider.of<AppRepo>(
+                      context,
+                      listen: false,
+                    ).token = value.token;
+
+                    Navigator.of(context)
+                        .pushReplacementNamed(AppRoutes.bottomNav);
+                  });
+                  // if (!context.mounted) return;
+                  // UserProvider.of(context)?.updateUser(user!);
 
                   //Navigator.of(context).popAndPushNamed(AppRoutes.bottomNav);
 
@@ -164,58 +173,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  Future<UserModel?> doLogin() async {
-    final userName = emailController.text;
-    final password = passwordController.text;
-    UserModel? user;
-    // final body = {
-    //   "username": userName,
-    //   "password": password,
-    // };
-    debugPrint("URL is ${AppURL.signIn}");
-    debugPrint('UserName && Password is $userName $password');
-    // final response = await http.post(
-    //   Uri.parse(AppURL.signIn),
-    //   body: jsonEncode(body),
-    // );
-    try {
-      final response = await http.get(
-        Uri.parse(AppURL.signIn),
-        headers: {"Content-Type": "application/json"},
-      );
-      final List bodyJson = jsonDecode(response.body);
-      print(bodyJson[0]);
-
-      if (response.statusCode == 200) {
-        // To get list of object
-
-        // List<UserModel> userList = bodyJson
-        //     .map((user) => UserModel.fromJson(
-        //           user,
-        //         ))
-        //     .toList();
-
-        user = UserModel.fromJson(
-          bodyJson[0],
-        );
-        print(user.email);
-      } else {
-        debugPrint("̀Error in webservice");
-
-        throw Exception('Error');
-      }
-    } catch (e) {
-      print(e);
-    }
-    return user;
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
   }
 }

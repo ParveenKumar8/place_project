@@ -4,10 +4,12 @@ import 'package:place_project/common/app_images.dart';
 import 'package:place_project/common/app_strings.dart';
 import 'package:place_project/common/app_text_styles.dart';
 import 'package:place_project/models/user_model.dart';
+import 'package:place_project/provider/app_repo.dart';
 import 'package:place_project/routes/app_routes.dart';
 import 'package:place_project/user_provider.dart';
 import 'package:place_project/widgets/app_bar_widget.dart';
 import 'package:place_project/widgets/user_avatar_widget.dart';
+import 'package:provider/provider.dart';
 
 enum ProfileMenu { edit, logout }
 
@@ -16,7 +18,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel? user = UserProvider.of(context)?.user;
+    final UserModel user = Provider.of<AppRepo>(context).user;
     return Scaffold(
       appBar: AppBarWidget(
         pageTitle: AppStrings.profileStr,
@@ -58,7 +60,7 @@ class ProfilePage extends StatelessWidget {
             height: 12.0,
           ),
           Text(
-            user?.username ?? "",
+            user.username ?? "",
             style: AppTextStyles.header2,
           ),
           const SizedBox(

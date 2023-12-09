@@ -1,6 +1,3 @@
-import 'package:place_project/models/address_model.dart';
-import 'package:place_project/models/company_model.dart';
-
 class UserModel {
   final int id;
   final String? name;
@@ -22,12 +19,14 @@ class UserModel {
     //this.company,
   );
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        json['id'],
-        json['name'],
-        json['username'],
-        json['email'],
-        json['phone'],
-        json['website'],
-      );
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      json['id'],
+      json['name'],
+      json['username'],
+      json['email'],
+      json['phone'],
+      json['website'],
+    );
+  }
 }

@@ -5,18 +5,21 @@ class TextFieldWidget extends StatelessWidget {
   final String? hintText;
   final bool? isPassword;
   final TextEditingController? controller;
+  final Function(String)? onChanged;
   //final ? isPassword;
   const TextFieldWidget({
     super.key,
     this.hintText,
     this.isPassword,
     this.controller,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      onChanged: onChanged,
       style: const TextStyle(
         color: AppColors.blackColor,
       ),
