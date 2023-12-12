@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:place_project/common/app_colors.dart';
 import 'package:place_project/common/app_text_styles.dart';
+import 'package:place_project/provider/app_repo.dart';
+import 'package:place_project/provider/post_provider.dart';
 import 'package:place_project/widgets/button_widget.dart';
 import 'package:place_project/widgets/text_field_widget.dart';
+import 'package:provider/provider.dart';
 
 class NewPostModal extends StatelessWidget {
   const NewPostModal({Key? key}) : super(key: key);
@@ -28,8 +31,11 @@ class NewPostModal extends StatelessWidget {
           const SizedBox(
             height: 12.0,
           ),
-          const TextFieldWidget(
+          TextFieldWidget(
             hintText: "Message...",
+            onChanged: (value) {
+              context.read<PostProvider>().message = value;
+            },
           ),
           const SizedBox(
             height: 12.0,
@@ -78,7 +84,14 @@ class NewPostModal extends StatelessWidget {
             height: 16.0,
           ),
           ButtonWidget(
-            onPressed: () {},
+            onPressed: () {
+              String token = context.read<AppRepo>().token;
+              print(token);
+              context
+                  .read<PostProvider>()
+                  .createPost(token)
+                  .then((value) => Navigator.of(context).pop());
+            },
             buttonName: "Create Post",
           )
         ],

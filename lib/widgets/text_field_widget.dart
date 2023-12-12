@@ -5,7 +5,8 @@ class TextFieldWidget extends StatelessWidget {
   final String? hintText;
   final bool? isPassword;
   final TextEditingController? controller;
-  final Function(String)? onChanged;
+  //final Function(String)? onChanged;
+  final ValueChanged<String>? onChanged;
   //final ? isPassword;
   const TextFieldWidget({
     super.key,

@@ -32,7 +32,6 @@ abstract class ServiceBase<T> {
         },
         body: jsonEncode(postParam),
       );
-
       return _handleResponse(response);
     } catch (e) {
       throw Exception(e);
@@ -58,7 +57,7 @@ class MyRequest extends http.BaseClient {
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) {
     if (token != null) {
-      request.headers['Authorization'] = 'Bearer $token';
+      //request.headers['Authorization'] = 'Bearer $token';
     }
     return request.send();
   }

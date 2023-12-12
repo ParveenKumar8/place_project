@@ -38,14 +38,16 @@ class PostItemWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: 8.0,
-          ),
-          Image.asset(
-            AppImages.imgPost1,
-            // width: width,
-            // height: 120.0,
-          ),
+          if (post.title != null) ...[
+            const SizedBox(
+              height: 8.0,
+            ),
+            Image.asset(
+              AppImages.imgPost1,
+              // width: width,
+              // height: 120.0,
+            ),
+          ],
           const SizedBox(
             height: 8.0,
           ),
