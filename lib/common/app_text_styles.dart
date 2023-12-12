@@ -9,6 +9,10 @@ class AppTextStyles {
     fontSize: 24,
     fontWeight: FontWeight.w600,
   );
+  static const header3 = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+  );
   static const subTitle1 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,

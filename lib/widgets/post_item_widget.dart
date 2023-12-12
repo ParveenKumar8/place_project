@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:place_project/common/app_images.dart';
 import 'package:place_project/common/app_text_styles.dart';
+import 'package:place_project/models/post_model.dart';
 
 class PostItemWidget extends StatelessWidget {
-  const PostItemWidget({Key? key}) : super(key: key);
+  final PostModel post;
+  const PostItemWidget({
+    Key? key,
+    required this.post,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +27,14 @@ class PostItemWidget extends StatelessWidget {
               const SizedBox(
                 width: 12.0,
               ),
-              const Text(
-                "Sarah Elizabeth",
-                style: AppTextStyles.subTitle3,
+              Expanded(
+                child: Text(
+                  '${post.title}',
+                  style: AppTextStyles.subTitle3,
+                  maxLines: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
@@ -39,30 +49,34 @@ class PostItemWidget extends StatelessWidget {
           const SizedBox(
             height: 8.0,
           ),
-          const Row(
+          Text(
+            '${post.body}',
+            style: AppTextStyles.subTitle3,
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Icon(
+              const Icon(
                 Icons.favorite_outline,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Text(
-                "9",
+                '${post.reactions}',
                 style: AppTextStyles.subTitle3,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 12.0,
               ),
-              Icon(
+              const Icon(
                 Icons.message_outlined,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Text(
-                "20",
+                '${post.userId}',
                 style: AppTextStyles.subTitle3,
               ),
             ],

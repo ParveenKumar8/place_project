@@ -8,6 +8,7 @@ import 'package:place_project/pages/home_page.dart';
 import 'package:place_project/pages/message_page.dart';
 import 'package:place_project/pages/profile_page.dart';
 import 'package:place_project/widgets/bottom_nav_item_widget.dart';
+import 'package:place_project/widgets/new_post_model.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -35,11 +36,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: currentIndex,
         onTap: (value) {
+          if (value == BottomNavOptions.addPost) {
+            addNewPostBottomSheet();
+            return;
+          }
           setState(() {
             currentIndex = value;
           });
         },
       ),
+    );
+  }
+
+  void addNewPostBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return const NewPostModal();
+      },
     );
   }
 }
