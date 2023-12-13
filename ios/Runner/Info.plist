@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Places App need access your images in gallery to add photo for Post.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Places App need access your images from camera to add photo for Post.</string>
 </dict>
 </plist>

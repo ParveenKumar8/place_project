@@ -10,4 +10,5 @@ class AppConfig {
   static const postLimit = '$baseUrl/posts?limit=15';
   static const posts = '$baseUrl/posts';
   static const createPosts = '$posts/add';
+  static const uploadPostImg = '$posts/photos';
 }

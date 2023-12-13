@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:place_project/common/app_colors.dart';
 import 'package:place_project/common/app_text_styles.dart';
 import 'package:place_project/provider/app_repo.dart';
 import 'package:place_project/provider/post_provider.dart';
+import 'package:place_project/utils/utils.dart';
 import 'package:place_project/widgets/button_widget.dart';
 import 'package:place_project/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
@@ -47,18 +51,47 @@ class NewPostModal extends StatelessWidget {
           const SizedBox(
             height: 12.0,
           ),
-          Container(
-            width: 180.0,
-            height: 180.0,
-            decoration: BoxDecoration(
-              border: Border.all(width: 2.0, color: Colors.white),
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: const Center(
-              child: Text(
-                "Upload from gallery",
-                style: AppTextStyles.body1,
-              ),
+          GestureDetector(
+            onTap: () =>
+                context.read<PostProvider>().pickImage(ImageSource.gallery),
+            child: Consumer<PostProvider>(
+              builder: (context, value, child) {
+                print(Utils.checkString(value.imgPath));
+                return Container(
+                  width: 180.0,
+                  height: 180.0,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 2.0, color: Colors.white),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Utils.checkString(value.imgPath)
+                      ? Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(16.0),
+                              child: Image.file(
+                                File(value.imgPath!),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                value.deleteImage();
+                              },
+                              icon: const Icon(
+                                Icons.delete_outline,
+                                color: Colors.red,
+                              ),
+                            )
+                          ],
+                        )
+                      : const Center(
+                          child: Text(
+                            "Upload from gallery",
+                            style: AppTextStyles.body1,
+                          ),
+                        ),
+                );
+              },
             ),
           ),
           const SizedBox(
@@ -72,7 +105,9 @@ class NewPostModal extends StatelessWidget {
             height: 12.0,
           ),
           OutlinedButton(
-            onPressed: () {},
+            onPressed: () {
+              context.read<PostProvider>().pickImage(ImageSource.camera);
+            },
             child: Text(
               "Camera",
               style: AppTextStyles.body2.copyWith(

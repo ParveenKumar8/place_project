@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart' as parser;
+import 'package:place_project/utils/utils.dart';
 
 abstract class ServiceBase<T> {
   Future<T> call();
@@ -33,6 +35,33 @@ abstract class ServiceBase<T> {
         body: jsonEncode(postParam),
       );
       return _handleResponse(response);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<Map<String, dynamic>> uploadImage(
+      String apiUrl, String fieldName, String imgPath,
+      {String? token}) async {
+    try {
+      final request = http.MultipartRequest(
+        "POST",
+        _getAPI(apiUrl),
+      );
+      if (Utils.checkString(token)) {
+        //request.headers['Authorization'] = 'Bearer $token';
+        request.headers.addAll({"Authorization": "Bearer $token"});
+      }
+      request.files.add(await http.MultipartFile.fromPath(
+        fieldName,
+        imgPath,
+        contentType: parser.MediaType('image', 'jpeg'),
+      ));
+      return _handleResponse(
+        await http.Response.fromStream(
+          await request.send(),
+        ),
+      );
     } catch (e) {
       throw Exception(e);
     }
