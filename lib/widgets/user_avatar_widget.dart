@@ -11,12 +11,21 @@ class UserAvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20.0),
-      child: Image.asset(
-        userImg,
-        width: imgSize,
-        height: imgSize,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 1.0,
+          color: Colors.white.withOpacity(0.7),
+        ),
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20.0),
+        child: Image.asset(
+          userImg,
+          width: imgSize,
+          height: imgSize,
+        ),
       ),
     );
   }
