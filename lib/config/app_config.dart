@@ -11,4 +11,6 @@ class AppConfig {
   static const posts = '$baseUrl/posts';
   static const createPosts = '$posts/add';
   static const uploadPostImg = '$posts/photos';
+
+  static const getUsersLocation = '$baseUrl/users?limit=15';
 }

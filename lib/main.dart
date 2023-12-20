@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:place_project/common/app_colors.dart';
 import 'package:place_project/provider/app_repo.dart';
 import 'package:place_project/provider/post_provider.dart';
+import 'package:place_project/provider/user_provider.dart';
 import 'package:place_project/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,9 @@ void main() {
       ),
       ChangeNotifierProvider<PostProvider>(
         create: (context) => PostProvider(),
+      ),
+      ChangeNotifierProvider<UserProvider>(
+        create: (context) => UserProvider(),
       ),
     ],
     child: const MyApp(),

@@ -1,5 +1,4 @@
 import 'package:place_project/config/app_config.dart';
-import 'package:place_project/data/response/login_response.dart';
 import 'package:place_project/data/services/service_base.dart';
 
 class UploadService extends ServiceBase<String> {

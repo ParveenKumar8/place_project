@@ -6,7 +6,7 @@ import 'package:place_project/common/app_colors.dart';
 import 'package:place_project/common/app_text_styles.dart';
 import 'package:place_project/provider/app_repo.dart';
 import 'package:place_project/provider/post_provider.dart';
-import 'package:place_project/utils/utils.dart';
+import 'package:place_project/utils/extensions.dart';
 import 'package:place_project/widgets/button_widget.dart';
 import 'package:place_project/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +56,7 @@ class NewPostModal extends StatelessWidget {
                 context.read<PostProvider>().pickImage(ImageSource.gallery),
             child: Consumer<PostProvider>(
               builder: (context, value, child) {
-                print(Utils.checkString(value.imgPath));
+                print(value.imgPath.checkStr());
                 return Container(
                   width: 180.0,
                   height: 180.0,
@@ -64,7 +64,7 @@ class NewPostModal extends StatelessWidget {
                     border: Border.all(width: 2.0, color: Colors.white),
                     borderRadius: BorderRadius.circular(16.0),
                   ),
-                  child: Utils.checkString(value.imgPath)
+                  child: value.imgPath.checkStr()
                       ? Stack(
                           children: [
                             ClipRRect(

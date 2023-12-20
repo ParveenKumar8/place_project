@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -29,9 +32,39 @@ class Utils {
     }
   }
 
-  /// Check String whether it is null or not
-  static bool checkString(String? str) {
-    // false is null or empty , true it has data
-    return str?.isNotEmpty ?? false;
+  static Path getPath(Size size) {
+    final path = Path();
+    //path.moveTo(0, 0);
+    path.moveTo(size.width / 2, size.height);
+    //path.lineTo(0, size.height / 2);
+
+    path.quadraticBezierTo(
+      -1,
+      (size.height / 2) + 12,
+      0,
+      size.height / 2,
+    );
+    path.addArc(
+      Rect.fromCenter(
+          center: Offset(size.width / 2, size.height / 2),
+          width: size.width,
+          height: size.height),
+      pi,
+      pi,
+    );
+    //path.lineTo(size.width / 2, size.height);
+    path.quadraticBezierTo(
+      size.width + 1,
+      (size.height / 2) + 12,
+      size.width / 2,
+      size.height,
+    );
+    return path;
   }
+
+  // /// Check String whether it is null or not
+  // static bool checkString(String? str) {
+  //   // false is null or empty , true it has data
+  //   return str?.isNotEmpty ?? false;
+  // }
 }

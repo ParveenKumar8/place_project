@@ -1,6 +1,19 @@
-class LatLongModel {
-  final String lat;
-  final String lng;
+class LatLngModel {
+  final double? lat;
+  final double? lng;
 
-  LatLongModel({required this.lat, required this.lng});
+  LatLngModel({
+    this.lat,
+    this.lng,
+  });
+
+  factory LatLngModel.fromJson(Map<String, dynamic> json) => LatLngModel(
+        lat: json["lat"]?.toDouble(),
+        lng: json["lng"]?.toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "lat": lat,
+        "lng": lng,
+      };
 }

@@ -1,3 +1,6 @@
+import 'package:place_project/models/company_model.dart';
+import 'package:place_project/utils/extensions.dart';
+
 class UserModel {
   final int id;
   final String? username;
@@ -7,6 +10,7 @@ class UserModel {
   final String? gender;
   final String? image;
   final String? token;
+  final CompanyModel? company;
 
   UserModel(
     this.id,
@@ -17,6 +21,7 @@ class UserModel {
     this.gender,
     this.image,
     this.token,
+    this.company,
   );
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -28,7 +33,8 @@ class UserModel {
       json['lastname'],
       json['gender'],
       json['image'],
-      json['token'],
+      json['token'] ?? "",
+      json["company"] == null ? null : CompanyModel.fromJson(json["company"]),
     );
   }
 }

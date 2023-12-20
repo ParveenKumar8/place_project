@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as parser;
-import 'package:place_project/utils/utils.dart';
+import 'package:place_project/utils/extensions.dart';
 
 abstract class ServiceBase<T> {
   Future<T> call();
@@ -48,7 +48,7 @@ abstract class ServiceBase<T> {
         "POST",
         _getAPI(apiUrl),
       );
-      if (Utils.checkString(token)) {
+      if (token.checkStr()) {
         //request.headers['Authorization'] = 'Bearer $token';
         request.headers.addAll({"Authorization": "Bearer $token"});
       }
